@@ -13,7 +13,7 @@ const double samplingFrequency = 50000; //
 double vReal[samples]; 
 double vImag[samples];
 
-// Filter coefficcionts - from MATLAB designed with: [b, a] = butter(2, 800*2/48762, 'high');
+// Filter coefficcionts - from MATLAB designed with: [b, a] = butter(2, 800*2/50000, 'high');
 // Cutoff frequency of 800 Hz, at a sampling freq. of 50000 Hz.
 double b0 = 0.9313;
 double b1 = -1.8627;
@@ -38,15 +38,14 @@ void setup() {
 void loop() {
 //  scan for 1khz
   turnLeft();
-  unsigned long Time_start = micros();
+  
   for ( uint16_t i = 0; i < samples; i++) 
   {
     vReal[i] = analogRead(A0);    // output of the microphone is at ADC0_RA
     vImag[i] = 0;
     delayMicroseconds(20);
   }
-  unsigned long Time_end = micros();
-  unsigned long ElapsedTime = Time_end - Time_start;   // I used this value and 1024 to determine the sampling frequency 
+  
   // Filter the signal
   for ( uint16_t i = 0; i < samples; i++) 
   {
@@ -64,12 +63,11 @@ void loop() {
   FFT.Windowing(vReal, samples, FFT_WIN_TYP_HAMMING, FFT_FORWARD);  //  Weigh data 
   FFT.Compute(vReal, vImag, samples, FFT_FORWARD); //  Compute FFT 
   FFT.ComplexToMagnitude(vReal, vImag, samples); //  Compute magnitudes 
-  // PrintVector(vReal, samples>>1, SCL_FREQUENCY);
-   double x = FFT.MajorPeak(vReal, samples, samplingFrequency);
+  double peak = FFT.MajorPeak(vReal, samples, samplingFrequency);
     
   delay(100);
-  Serial.println("\n\n\n\n\n\n\n\n\n\nExpected freq");
-  Serial.println(x, 6);
+  Serial.println("\nExpected freq");
+  Serial.println(peak, 4);
   
 }
 
