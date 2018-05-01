@@ -15,11 +15,14 @@ double vImag[SAMPLES];
   int freq = 0;
   int bin = 0;
   
-void setup() {
+void setup() 
+{
   // put your setup code here, to run once:
 
   Serial.begin(115200);
   sampling_period_us = round(1000000*(1.0/SAMPLING_FREQUENCY));
+  servoLeft.attach(10,1300,1480);  // Set left servo to digital pin 10
+  servoRight.attach(9,1520,1700);
 }
 
 void loop() {
@@ -51,10 +54,11 @@ void loop() {
       stopRobot();
       double* vRealValue = binValues();
       double Amplitude = vRealValue[100];
-      if (Amplitude > PreviousAmplitude){
+      if (Amplitude > PreviousAmplitude)
+      {
         PreviousAmplitude = Amplitude;
         location = 1;
-        }
+       }
       turnLeft();
       delay(4000); //figure out delay amount to turn back 180 degrees
       stopRobot();
