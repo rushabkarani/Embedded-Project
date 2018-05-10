@@ -1,8 +1,8 @@
 
 void setup() {
   // put your setup code here, to run once:
-//pinMode(10, OUTPUT);
-Serial.begin(9600);
+pinMode(10, OUTPUT);
+//Serial.begin(9600);
 
 //ADC0 Configuration register 1
 //ADC0_CFG1 |= _BV(5) | (1U << 6); // clock division of 8. 9MHZ, 
@@ -29,15 +29,15 @@ Serial.begin(9600);
 
 void loop() {
   // put your main code here, to run repeatedly:
-//tone(10,2000);
-//delay(1000);
-//noTone (10);
-//delay (1000);
+tone(10,10000);
+delay(500);
+noTone (10);
+delay (500);
 //uint16_t data = ADC0_RA; // Data result register A
 
-int sensorVal = analogRead(A0);
+//int sensorVal = analogRead(A0);
 
-Serial.println(sensorVal);
-delay(10);
+//Serial.println(sensorVal);
+//delay(10);
 }
 

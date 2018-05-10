@@ -47,109 +47,125 @@ void loop() {
     int PreviousAmplitude = vReal[k];
     int location = 0;
     
-    if (peak>=10000){
+    if (peak>=5000)
+    {
       //move to listen to larger amplitude vReal[100]
       turnRight();
       delay(2000); //figure out how long to move for a 90 degree turn
       stopRobot();
       double* vRealValue = binValues();
+      double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
       double Amplitude = vRealValue[100];
       if (Amplitude > PreviousAmplitude)
       {
         PreviousAmplitude = Amplitude;
         location = 1;
-       }
+      }
       turnLeft();
-      delay(4000); //figure out delay amount to turn back 180 degrees
+      delay(1600); //figure out delay amount to turn back 180 degrees
       stopRobot();
+      delay(1000);
       vRealValue = binValues();
       Amplitude = vRealValue[100];
-      if (Amplitude > PreviousAmplitude){
+      if (Amplitude > PreviousAmplitude)
+      {
         PreviousAmplitude = Amplitude;
         location = 2;
+      }
+        if (location == 2)
+        {
+          forward();
+          delay(1000);
+          stopRobot();
+          delay(1000);
         }
-      if (location == 2){
-        forward();
-        delay(2000);
-        stopRobot();
-      }
-      else if (location == 0){
+        else if (location == 0)
+        {
+          turnRight();
+          delay(1000);
+          forward();
+          delay(1000);
+          stopRobot();
+          delay(1000);
+        }
+      else
+      {
         turnRight();
-        delay(2000);
+        delay(2000); //delay value to move back 180 degrees
         forward();
-        delay(2000);
+        delay(1000);
         stopRobot();
+        delay(1000);
       }
-      else{
-        turnRight();
-        delay(4000); //delay value to move back 180 degrees
-        forward();
-        delay(2000);
-        stopRobot();
-     }
      
     }
-    if (9000<=peak<=9200){
-      // move and listen to vReal[90]
-       turnRight();
-      delay(2000); //figure out how long to move for a 90 degree turn
-      stopRobot();
-      double* vRealValue = binValues();
-      double Amplitude = vRealValue[90];
-      if (Amplitude > PreviousAmplitude){
-        PreviousAmplitude = Amplitude;
-        location = 1;
-        }
-      turnLeft();
-      delay(4000); //figure out delay amount to turn back 180 degrees
-      stopRobot();
-      vRealValue = binValues();
-      Amplitude = vRealValue[90];
-      if (Amplitude > PreviousAmplitude){
-        PreviousAmplitude = Amplitude;
-        location = 2;
-        }
-      if (location == 2){
-        forward();
-        delay(2000);
-        stopRobot();
-      }
-      else if (location == 0){
-        turnRight();
-        delay(2000);
-        forward();
-        delay(2000);
-        stopRobot();
-      }
-      else{
-        turnRight();
-        delay(4000); //delay value to move back 180 degrees
-        forward();
-        delay(2000);
-        stopRobot();
-     }
-     
-
-      
-      }
+//    else if (9000<=peak<=9200)
+//    {
+//      // move and listen to vReal[90]
+//       turnRight();
+//      delay(2000); //figure out how long to move for a 90 degree turn
+//      stopRobot();
+//      double* vRealValue = binValues();
+//      double Amplitude = vRealValue[90];
+//      if (Amplitude > PreviousAmplitude)
+//      {
+//        PreviousAmplitude = Amplitude;
+//        location = 1;
+//      }
+//      turnLeft();
+//      delay(4000); //figure out delay amount to turn back 180 degrees
+//      stopRobot();
+//      vRealValue = binValues();
+//      Amplitude = vRealValue[90];
+//      if (Amplitude > PreviousAmplitude)
+//      {
+//        PreviousAmplitude = Amplitude;
+//        location = 2;
+//      }
+//        if (location == 2)
+//        {
+//          forward();
+//          delay(2000);
+//          stopRobot();
+//        }
+//        else if (location == 0)
+//        {
+//          turnRight();
+//          delay(2000);
+//          forward();
+//          delay(2000);
+//          stopRobot();
+//        }
+//      else
+//      {
+//        turnRight();
+//        delay(4000); //delay value to move back 180 degrees
+//        forward();
+//        delay(2000);
+//        stopRobot();
+//      }
+//     
+//
+//      
+//     }
  
 
     // check amplitude and move car 
     // move for dealy(2000)
     // stopRobot();
     
- Serial.print("peak1 = ");
+  Serial.print("peak1 = ");
 
-    Serial.print(peak);
-    Serial.print(" k:");
-    Serial.print(k);
-    Serial.print(" Amplitude = ");
-    Serial.println(vReal[k]);
-    delay(1000); 
-
+  Serial.print(peak);
+  Serial.print(" k:");
+  Serial.print(k);
+  Serial.print(" Amplitude = ");
+  Serial.println(vReal[k]);
+  delay(1000); 
 }
 
-double* binValues(){
+double* binValues()
+{
   for(int i=0; i<SAMPLES; i++)
   {
     microseconds = micros();
@@ -161,8 +177,9 @@ double* binValues(){
     FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
     FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
     FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
+    
     return vReal;
-  }
+}
 
   // Motion routines for forward, reverse, turns, and stop
 void reverse() {

@@ -1,8 +1,8 @@
 #include "arduinoFFT.h"
 #include <Servo.h>
 
-#define SAMPLES 128
-#define SAMPLING_FREQUENCY 21000
+#define SAMPLES 256
+#define SAMPLING_FREQUENCY 25600
 
 arduinoFFT FFT = arduinoFFT();
 unsigned int sampling_period_us;
@@ -20,7 +20,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  turnLeft();
+//  turnLeft();
   for(int i=0; i<SAMPLES; i++)
   {
     microseconds = micros();
@@ -56,23 +56,23 @@ void loop() {
 
 }
 
-void forward() {
-  servoLeft.write(0);
-  servoRight.write(180);
-}
-void reverse() {
-  servoLeft.write(180);
-  servoRight.write(0);
-}
-void turnRight() {
-  servoLeft.write(180);
-  servoRight.write(180);
-}
-void turnLeft() {
-  servoLeft.write(0);
-  servoRight.write(0);
-}
-void stopRobot() {
-  servoLeft.write(90);
-  servoRight.write(90);
-}
+//void forward() {
+//  servoLeft.write(0);
+//  servoRight.write(180);
+//}
+//void reverse() {
+//  servoLeft.write(180);
+//  servoRight.write(0);
+//}
+//void turnRight() {
+//  servoLeft.write(180);
+//  servoRight.write(180);
+//}
+//void turnLeft() {
+//  servoLeft.write(0);
+//  servoRight.write(0);
+//}
+//void stopRobot() {
+//  servoLeft.write(90);
+//  servoRight.write(90);
+//}
